@@ -2,15 +2,22 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Task, TaskFilters } from '../models/task.model';
-import { environment } from '../../environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
-  private baseUrl = environment.apiUrl;
+  private baseUrl: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { 
+    this.baseUrl = this.getApiUrl();
+  }
+  private getApiUrl(): string {
+    // Check if we're in production (deployed on Netlify)
+    if (window.location.hostname !== 'localhost') {
+      return '/api'; // Use relative URL for production
+    }
 
   getTasks(filters?: TaskFilters): Observable<Task[]> {
     let params = new HttpParams();
