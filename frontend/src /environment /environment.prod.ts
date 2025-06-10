@@ -1,4 +1,4 @@
 xport const environment = {
   production: true,
-  apiUrl: '/api'
+  apiUrl: 'https://tasktrackerpro-backend.onrender.com'
 };
