@@ -22,7 +22,7 @@ app.secret_key = os.environ.get("SESSION_SECRET", "dev-secret-key-change-in-prod
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
 # Configure the database
-database_url = os.environ.get("DATABASE_URL")
+database_url = os.environ.get("postgresql://task_management_db_innj_user:9xZP7RmnKUOP0mUXa7vcFSw0sfVQreMq@dpg-d145mhnfte5s73e0jo60-a.oregon-postgres.render.com/task_management_db_innj")
 if not database_url:
     database_url = "sqlite:///instance/tasks.db"
     os.makedirs("instance", exist_ok=True)
