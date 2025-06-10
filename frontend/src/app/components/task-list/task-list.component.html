@@ -1,0 +1,181 @@
+<div class="container">
+  <!-- Header Section -->
+  <div class="row mb-4">
+    <div class="col">
+      <h1 class="display-5 mb-3">
+        <i class="fas fa-tasks me-3"></i>Task Management System
+      </h1>
+      
+      <!-- Action Buttons -->
+      <div class="d-flex flex-wrap gap-2 mb-3">
+        <button type="button" class="btn btn-primary" (click)="openCreateModal()">
+          <i class="fas fa-plus me-2"></i>Create New Task
+        </button>
+        <button type="button" class="btn btn-outline-secondary" (click)="clearFilters()">
+          <i class="fas fa-filter-circle-xmark me-2"></i>Clear Filters
+        </button>
+        <button type="button" class="btn btn-outline-info" (click)="loadTasks()">
+          <i class="fas fa-refresh me-2"></i>Refresh
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters Section -->
+  <div class="row mb-4">
+    <div class="col">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title mb-0">
+            <i class="fas fa-filter me-2"></i>Filters & Sorting
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="row g-3">
+            <!-- Filter Controls -->
+            <div class="col-md-6 col-lg-3">
+              <label for="entityFilter" class="form-label">Entity Name</label>
+              <input type="text" class="form-control" id="entityFilter" 
+                     [(ngModel)]="filters.entity" (input)="applyFilters()" 
+                     placeholder="Filter by entity">
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <label for="taskTypeFilter" class="form-label">Task Type</label>
+              <input type="text" class="form-control" id="taskTypeFilter" 
+                     [(ngModel)]="filters.task_type" (input)="applyFilters()" 
+                     placeholder="Filter by task type">
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <label for="contactFilter" class="form-label">Contact Person</label>
+              <input type="text" class="form-control" id="contactFilter" 
+                     [(ngModel)]="filters.contact" (input)="applyFilters()" 
+                     placeholder="Filter by contact">
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <label for="statusFilter" class="form-label">Status</label>
+              <select class="form-select" id="statusFilter" 
+                      [(ngModel)]="filters.status" (change)="applyFilters()">
+                <option value="">All Statuses</option>
+                <option value="open">Open</option>
+                <option value="closed">Closed</option>
+              </select>
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <label for="dateFilter" class="form-label">Creation Date</label>
+              <input type="date" class="form-control" id="dateFilter" 
+                     [(ngModel)]="filters.date" (change)="applyFilters()">
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <label for="sortBy" class="form-label">Sort By</label>
+              <select class="form-select" id="sortBy" 
+                      [(ngModel)]="filters.sort_by" (change)="applyFilters()">
+                <option value="date_created">Date Created</option>
+                <option value="entity_name">Entity Name</option>
+                <option value="task_type">Task Type</option>
+                <option value="task_time">Task Time</option>
+                <option value="contact_person">Contact Person</option>
+                <option value="status">Status</option>
+              </select>
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <label for="sortOrder" class="form-label">Sort Order</label>
+              <select class="form-select" id="sortOrder" 
+                      [(ngModel)]="filters.sort_order" (change)="applyFilters()">
+                <option value="desc">Descending</option>
+                <option value="asc">Ascending</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tasks Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="card-title mb-0">
+            <i class="fas fa-list me-2"></i>Tasks
+          </h5>
+          <span class="badge bg-info">{{ tasks.length }} task{{ tasks.length !== 1 ? 's' : '' }}</span>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive" *ngIf="tasks.length > 0">
+            <table class="table table-hover mb-0">
+              <thead class="table-dark">
+                <tr>
+                  <th>Date Created</th>
+                  <th>Entity Name</th>
+                  <th>Task Type</th>
+                  <th>Task Time</th>
+                  <th>Contact Person</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let task of tasks">
+                  <td>{{ formatDateTime(task.date_created || '') }}</td>
+                  <td>{{ task.entity_name }}</td>
+                  <td>{{ task.task_type }}</td>
+                  <td>{{ formatDateTime(task.task_time) }}</td>
+                  <td>{{ task.contact_person }}</td>
+                  <td>
+                    <span class="badge" 
+                          [class]="task.status === 'open' ? 'bg-success' : 'bg-secondary'">
+                      <i class="fas" 
+                         [class]="task.status === 'open' ? 'fa-circle-play' : 'fa-circle-check'"></i>
+                      {{ task.status | titlecase }}
+                    </span>
+                  </td>
+                  <td>
+                    <div class="btn-group btn-group-sm" role="group">
+                      <button type="button" class="btn btn-outline-primary" 
+                              (click)="openEditModal(task)" title="Edit Task">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button type="button" 
+                              [class]="'btn btn-outline-' + (task.status === 'open' ? 'warning' : 'success')"
+                              (click)="toggleTaskStatus(task)" 
+                              [title]="task.status === 'open' ? 'Mark as Closed' : 'Mark as Open'">
+                        <i class="fas" 
+                           [class]="task.status === 'open' ? 'fa-check-circle' : 'fa-undo'"></i>
+                      </button>
+                      <button type="button" class="btn btn-outline-danger" 
+                              (click)="deleteTask(task)" title="Delete Task">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-outline-info ms-1" 
+                            *ngIf="task.note" (click)="showNote(task.note!)" title="View Note">
+                      <i class="fas fa-sticky-note"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <!-- Empty State -->
+          <div *ngIf="tasks.length === 0" class="text-center py-5">
+            <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+            <h5 class="text-muted">No tasks found</h5>
+            <p class="text-muted">Create your first task or adjust your filters.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Task Form Modal -->
+<div *ngIf="showTaskForm" class="modal fade show d-block" style="background: rgba(0,0,0,0.5);">
+  <app-task-form 
+    [task]="currentTask" 
+    [isEdit]="isEditMode" 
+    (taskSubmit)="onTaskSubmit($event)" 
+    (cancel)="onCancel()">
+  </app-task-form>
+</div>
