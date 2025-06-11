@@ -175,3 +175,14 @@ def get_filter_options():
     except Exception as e:
         logging.error(f"Error getting filter options: {str(e)}")
         return jsonify({'error': str(e)}), 500
+        RENDER_API_BASE = 'https://tasktrackerpro-backend.onrender.com/api'
+@app.route('/api/proxy/tasks', methods=['GET'])
+def proxy_get_tasks():
+    """Proxy to get tasks from Render backend"""
+    try:
+        response = requests.get(f'{RENDER_API_BASE}/tasks', params=request.args)
+        return jsonify(response.json()), response.status_code
+    except Exception as e:
+        logging.error(f"Proxy error: {str(e)}")
+        return jsonify({'error': 'Backend connection failed'}), 500
+
