@@ -4,8 +4,8 @@ A comprehensive full-stack web application for managing tasks with CRUD operatio
 
 ## 🚀 Live Demo
 
-- **Frontend**: [Coming Soon]
-- **Backend API**: https://tasktrackerpro-backend.onrender.com/
+
+- **Full Stack API**: https://tasktrackerpro-backend.onrender.com/
 
 ## ✨ Features
 
