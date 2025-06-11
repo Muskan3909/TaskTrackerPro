@@ -66,7 +66,7 @@ async function loadTasks() {
         if (sortBy) params.append('sort_by', sortBy);
         if (sortOrder) params.append('sort_order', sortOrder);
         
-        const response = await fetch(`/api/tasks?${params}`);
+        const response = await fetch(`${API_CONFIG.getBaseUrl()}/tasks?${params}`);
         
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
