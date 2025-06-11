@@ -3,6 +3,7 @@ from app import app, db
 from models import Task
 from datetime import datetime
 import logging
+import requests
 
 @app.route('/')
 def index():
