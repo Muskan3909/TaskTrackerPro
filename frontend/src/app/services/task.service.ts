@@ -3,28 +3,13 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Task, TaskFilters } from '../models/task.model';
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
-  private baseUrl: string;
+  private baseUrl = 'http://localhost:5000/api';
 
-  constructor(private http: HttpClient) { 
-    this.baseUrl = this.getApiUrl();
-  }
-  private getApiUrl(): string {
-    // For Replit environment, use the current host with port 5000
-    if (window.location.hostname.includes('replit.app') || window.location.hostname.includes('replit.dev')) {
-      return `https://${window.location.hostname.replace('-5173', '-5000')}/api`;
-    }
-    // For localhost development
-    if (window.location.hostname === 'localhost') {
-      return 'http://localhost:5000/api';
-    }
-    // Default fallback
-    return '/api';
-  }
+  constructor(private http: HttpClient) { }
 
   getTasks(filters?: TaskFilters): Observable<Task[]> {
     let params = new HttpParams();
@@ -57,11 +42,6 @@ export class TaskService {
   updateTaskStatus(id: number, status: string): Observable<Task> {
     return this.http.patch<Task>(`${this.baseUrl}/tasks/${id}/status`, { status });
   }
-
-  getFilterOptions(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/filters`);
-  }
-}
 
   getFilterOptions(): Observable<any> {
     return this.http.get(`${this.baseUrl}/filters`);
