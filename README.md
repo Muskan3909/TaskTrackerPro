@@ -1,8 +1,13 @@
-# Task Management System
+# TaskTrackerPro
 
 A comprehensive full-stack web application for managing tasks with CRUD operations, filtering, sorting, and modal-based interactions.
 
-## Features
+## 🚀 Live Demo
+
+- **Frontend**: [Coming Soon]
+- **Backend API**: https://tasktrackerpro-backend.onrender.com/
+
+## ✨ Features
 
 ### Core Functionality
 - **Create Tasks**: Add new tasks with entity name, task type, scheduled time, contact person, and optional notes
@@ -19,7 +24,7 @@ A comprehensive full-stack web application for managing tasks with CRUD operatio
 - **Responsive Design**: Mobile-friendly interface using Bootstrap
 - **Form Validation**: Client-side and server-side validation
 
-## Technology Stack
+## 🛠️ Tech Stack
 
 ### Backend
 - **Flask**: Python 3.6+ web framework
@@ -34,29 +39,28 @@ A comprehensive full-stack web application for managing tasks with CRUD operatio
 - **Angular Reactive Forms**: Form handling and validation
 - **HttpClient**: RESTful API communication
 - **Font Awesome**: Icon library
-
-### Development Tools
 - **Angular CLI**: Project scaffolding and build tools
 - **TypeScript**: Type-safe JavaScript
 - **RxJS**: Reactive programming library
 
-## Project Structure
+## 📁 Project Structure
 
 ```
+TaskTrackerPro/
 ├── backend/
-│   ├── app.py              # Flask application factory
-│   ├── main.py             # Application entry point
-│   ├── models.py           # Database models
-│   ├── routes.py           # API endpoints
-│   └── requirements files
+│   ├── app.py                # Flask application factory
+│   ├── main.py              # Application entry point
+│   ├── models.py            # Database models
+│   ├── routes.py            # API endpoints
+│   └── requirements.txt     # Python dependencies
 ├── frontend/
 │   ├── src/
 │   │   ├── app/
 │   │   │   ├── components/
-│   │   │   │   ├── task-list/    # Main task display component
-│   │   │   │   └── task-form/    # Task creation/editing form
+│   │   │   │   ├── task-list/      # Main task display component
+│   │   │   │   └── task-form/      # Task creation/editing form
 │   │   │   ├── models/
-│   │   │   │   └── task.model.ts # TypeScript interfaces
+│   │   │   │   └── task.model.ts   # TypeScript interfaces
 │   │   │   ├── services/
 │   │   │   │   └── task.service.ts # HTTP service layer
 │   │   │   └── app.component.ts
@@ -67,59 +71,57 @@ A comprehensive full-stack web application for managing tasks with CRUD operatio
 └── README.md
 ```
 
-## Installation and Setup
+## 🚀 Getting Started
 
 ### Prerequisites
-- **Python 3.6+** with pip
-- **Node.js 18+** with npm
-- **Angular CLI** (installed globally)
+- Python 3.6+ with pip
+- Node.js 18+ with npm
+- Angular CLI (installed globally): `npm install -g @angular/cli`
 
-### Development Setup
+### Backend Setup
 
-#### 1. Backend Setup (Flask)
+1. **Install Python dependencies:**
+   ```bash
+   pip install flask flask-sqlalchemy flask-cors gunicorn psycopg2-binary
+   ```
 
-**Install Python dependencies:**
-```bash
-pip install flask flask-sqlalchemy flask-cors gunicorn psycopg2-binary
-```
+2. **Set environment variables:**
+   ```bash
+   export SESSION_SECRET="task-mgmt-secret-2024-secure"
+   export DATABASE_URL="postgresql://task_management_db_innj_user:9xZP7RmnKUOP0mUXa7vcFSw0sfVQreMq@dpg-d145mhnfte5s73e0jo60-a.oregon-postgres.render.com/task_management_db_innj"
+   ```
 
-**Set environment variables:**
-```bash
-export SESSION_SECRET="your-secret-key-here"
-export DATABASE_URL="postgresql://..."  # or use SQLite for development
-```
-
-**Start the Flask backend:**
-```bash
-python main.py
-# or with Gunicorn:
-gunicorn --bind 0.0.0.0:5000 --reload main:app
-```
+3. **Start the Flask backend:**
+   ```bash
+   python main.py
+   # or with Gunicorn:
+   gunicorn --bind 0.0.0.0:5000 --reload main:app
+   ```
 
 Backend will be available at `http://localhost:5000`
 
-#### 2. Frontend Setup (Angular)
+### Frontend Setup
 
-**Navigate to frontend directory:**
-```bash
-cd frontend
-```
+1. **Navigate to frontend directory:**
+   ```bash
+   cd frontend
+   ```
 
-**Install Angular dependencies:**
-```bash
-npm install
-```
+2. **Install Angular dependencies:**
+   ```bash
+   npm install
+   ```
 
-**Start the Angular development server:**
-```bash
-npm start
-# or
-ng serve --host 0.0.0.0 --port 4200
-```
+3. **Start the Angular development server:**
+   ```bash
+   npm start
+   # or
+   ng serve --host 0.0.0.0 --port 4200
+   ```
 
 Frontend will be available at `http://localhost:4200`
 
-### Running Both Services
+### Development Mode
 
 For development, run both services simultaneously:
 
@@ -133,16 +135,16 @@ gunicorn --bind 0.0.0.0:5000 --reload main:app
 cd frontend && npm start
 ```
 
-## API Documentation
+## 📚 API Documentation
 
 ### Base URL
 ```
-http://localhost:5000/api
+https://tasktrackerpro-backend.onrender.com/api
 ```
 
 ### Endpoints
 
-#### GET /api/tasks
+#### GET `/api/tasks`
 Retrieve all tasks with optional filtering and sorting.
 
 **Query Parameters:**
@@ -154,44 +156,44 @@ Retrieve all tasks with optional filtering and sorting.
 - `sort_by`: Sort column (`date_created`, `entity_name`, `task_type`, `task_time`, `contact_person`, `status`)
 - `sort_order`: Sort direction (`asc` or `desc`)
 
-#### POST /api/tasks
+#### POST `/api/tasks`
 Create a new task.
 
 **Request Body:**
 ```json
 {
-    "entity_name": "Customer ABC",
-    "task_type": "Follow-up Call",
-    "task_time": "2024-01-15T14:30",
-    "contact_person": "John Doe",
-    "note": "Optional task note"
+  "entity_name": "Customer ABC",
+  "task_type": "Follow-up Call",
+  "task_time": "2024-01-15T14:30",
+  "contact_person": "John Doe",
+  "note": "Optional task note"
 }
 ```
 
-#### PUT /api/tasks/{id}
+#### PUT `/api/tasks/<id>`
 Update an existing task.
 
 **Request Body:** Same as POST with optional fields
 
-#### DELETE /api/tasks/{id}
+#### DELETE `/api/tasks/<id>`
 Delete a task by ID.
 
-#### PATCH /api/tasks/{id}/status
+#### PATCH `/api/tasks/<id>/status`
 Update task status only.
 
 **Request Body:**
 ```json
 {
-    "status": "closed"
+  "status": "closed"
 }
 ```
 
-#### GET /api/filters
+#### GET `/api/filter-options`
 Get available filter options.
 
-## Angular Architecture
+## 🏗️ Architecture
 
-### Components
+### Frontend Components
 
 #### TaskListComponent
 - Main dashboard component
@@ -204,16 +206,13 @@ Get available filter options.
 - Reactive forms with validation
 - Emits events to parent component
 
-### Services
-
 #### TaskService
 - Handles all HTTP communication with Flask API
 - Provides methods for CRUD operations
 - Uses Angular HttpClient with RxJS Observables
 
-### Models
+### Data Models
 
-#### Task Interface
 ```typescript
 interface Task {
   id?: number;
@@ -227,38 +226,33 @@ interface Task {
 }
 ```
 
-## Deployment
+## 🚀 Deployment
 
-### Production Build
-
-#### Angular Frontend
+### Frontend Deployment
 ```bash
 cd frontend
 ng build --prod
 ```
 
-#### Flask Backend
+### Backend Deployment
 Configure with environment variables:
 ```bash
 export FLASK_ENV=production
-export DATABASE_URL="postgresql://..."
+export DATABASE_URL="postgresql://task_management_db_innj_user:9xZP7RmnKUOP0mUXa7vcFSw0sfVQreMq@dpg-d145mhnfte5s73e0jo60-a.oregon-postgres.render.com/task_management_db_innj"
+export SESSION_SECRET="task-mgmt-secret-2024-secure"
 ```
 
-### Hosting Options
-
-**Recommended Platforms:**
+### Recommended Platforms
 - **Backend**: Heroku, Railway, Render, AWS Elastic Beanstalk
 - **Frontend**: Netlify, Vercel, AWS S3 + CloudFront
 - **Full-Stack**: Railway, Heroku (with buildpacks), Docker containers
 
-### Environment Variables
-
-**Required for Production:**
-- `SESSION_SECRET`: Flask session secret key
-- `DATABASE_URL`: PostgreSQL connection string
+### Environment Variables (Production)
+- `SESSION_SECRET`: `task-mgmt-secret-2024-secure`
+- `DATABASE_URL`: `postgresql://task_management_db_innj_user:9xZP7RmnKUOP0mUXa7vcFSw0sfVQreMq@dpg-d145mhnfte5s73e0jo60-a.oregon-postgres.render.com/task_management_db_innj`
 - `FLASK_ENV`: Set to `production`
 
-## Development Notes
+## 🔧 Key Features Implementation
 
 ### CORS Configuration
 Flask backend is configured with CORS to allow requests from `http://localhost:4200` during development.
@@ -266,18 +260,24 @@ Flask backend is configured with CORS to allow requests from `http://localhost:4
 ### Database Models
 The Task model includes all required fields with proper validation and relationships.
 
-### Form Validation
+### Validation
 Both client-side (Angular) and server-side (Flask) validation ensure data integrity.
 
 ### Error Handling
 Comprehensive error handling on both frontend and backend with user-friendly messages.
 
-## AI Tool Usage
+## 🤝 Contributing
 
-This project was developed with assistance from AI tools for:
-- **Code Generation**: Component scaffolding and boilerplate code
-- **Architecture Planning**: Project structure and technology decisions
-- **Documentation**: README and code comments
-- **Debugging**: Issue resolution and optimization suggestions
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-The core business logic, component interactions, and architectural decisions were human-guided with AI assistance for implementation efficiency.
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 👥 Author
+
+**Muskan** - [GitHub Profile](https://github.com/Muskan3909)
